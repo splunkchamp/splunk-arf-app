@@ -7,6 +7,7 @@ import requests
 import logging
 import six
 import splunk.clilib.cli_common
+from fetchCreds import fetchCreds
 
 logging.basicConfig()
 
@@ -22,7 +23,8 @@ class Device(object):
         configuration_dict = splunk.clilib.cli_common.getConfStanza('carbonblack', 'cbserver')
 
         self.cb_server = configuration_dict['cburl']
-        self.token = configuration_dict['cbapikey']
+        #self.token = configuration_dict['cbapikey']
+        self.token = fetchCreds()
 
         self.cb = CbApi(self.cb_server, token=self.token, ssl_verify=False)
 

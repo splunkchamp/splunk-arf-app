@@ -1,15 +1,20 @@
 <setup>
   <block title="Configure This CB Connection Info"></block>
 ​
-  <block title="Carbon Black Credentials" endpoint="carbonblack/cb_configure" entity="cbserver">
+  <block title="Carbon Black Server Location" endpoint="carbonblack/cb_configure" entity="cbserver">
     <input field="cburl">
         <label>CB server URL</label>
         <type>text</type>
     </input>
-​
-    <input field="cbapikey">
+    </block>
+​  <block title="Carbon Black Server URL and API Key" endpoint="storage/passwords" entity="_new">
+  <input field="name">
+    <label>CB server URL</label>
+    <type>text</type>
+  </input>
+    <input field="password">
         <label>API Key</label>
-        <type>text</type>
+        <type>password</type>
     </input>
   </block>
 ​

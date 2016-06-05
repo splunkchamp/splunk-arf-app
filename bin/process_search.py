@@ -3,15 +3,17 @@
 # You can sumbit up to 25 "resources" to VT, however this script does not do that.
 
 from cbapi import CbApi
-from ConfigParser import RawConfigParser
 import os
 import sys
 from splunklib.searchcommands import dispatch, GeneratingCommand, Configuration, Option
+import splunk.entity as entity
 import time
 import dateutil.parser
 import json
-import splunk.clilib.cli_common
+import logging
 
+
+logging.basicConfig(filename='/Users/kchamplin/Desktop/processserach.log',level=logging.DEBUG)
 
 
 @Configuration()
@@ -53,10 +55,23 @@ class ProcessSearchCommand(GeneratingCommand):
 
     def prepare(self):
 
-        configuration_dict = splunk.clilib.cli_common.getConfStanza('carbonblack', 'cbserver')
 
-        self.cb_server = configuration_dict['cburl']
-        self.token = configuration_dict['cbapikey']
+        sessionKey = str(self._metadata.searchinfo.session_key)
+
+        myapp = 'splunk-arf-app'
+
+        try:
+            # list all credentials
+            entities = entity.getEntities(['admin', 'passwords'], namespace=myapp, owner='nobody', sessionKey=sessionKey)
+
+            for i, c in entities.items():
+                self.cb_server = c['username']
+                self.token = c['clear_password']
+
+
+        except Exception, e:
+            self.logger.exception("Could not get %s credentials from splunk. Error: %s, Token: %s" % (myapp, str(e),sessionKey))
+
 
         self.cb = CbApi(self.cb_server, token=self.token, ssl_verify=False)
 
