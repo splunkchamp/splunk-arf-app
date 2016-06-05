@@ -7,7 +7,7 @@ import requests
 import logging
 import six
 import splunk.clilib.cli_common
-from fetchCreds import fetchCreds
+import splunk.entity as entity
 
 logging.basicConfig()
 
@@ -20,11 +20,26 @@ class Device(object):
     path = "carbonblack.endpoint"
 
     def __init__(self, hosts_mapping):
-        configuration_dict = splunk.clilib.cli_common.getConfStanza('carbonblack', 'cbserver')
 
-        self.cb_server = configuration_dict['cburl']
-        #self.token = configuration_dict['cbapikey']
-        self.token = fetchCreds()
+        sessionKey = str(self._metadata.searchinfo.session_key)
+
+        myapp = 'splunk-arf-app'
+
+        try:
+            # list all credentials
+            entities = entity.getEntities(['admin', 'passwords'], namespace=myapp, owner='nobody',
+                                          sessionKey=sessionKey)
+
+            for i, c in entities.items():
+                self.cb_server = c['username']
+                self.token = c['clear_password']
+
+
+        except Exception, e:
+            self.logger.exception(
+                "Could not get %s credentials from splunk. Error: %s, Token: %s" % (myapp, str(e), sessionKey))
+
+
 
         self.cb = CbApi(self.cb_server, token=self.token, ssl_verify=False)
 
