@@ -58,7 +58,7 @@ class ProcessSearchCommand(GeneratingCommand):
 
         sessionKey = str(self._metadata.searchinfo.session_key)
 
-        myapp = 'splunk-arf-app'
+        myapp = 'carbonblack-enterprise-response'
 
         try:
             # list all credentials
