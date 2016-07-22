@@ -29,8 +29,6 @@
         </search>
         <option name="underLabel">sensors reporting alerts</option>
         <option name="field">count</option>
-        <option name="linkFields">result, afterlabel</option>
-        <option name="linkSearch">| tstats count from datamodel=Carbon_Black.CB_Alerts by CB_Alerts.computer_name,CB_Alerts.feed_name</option>
         <option name="colorBy">value</option>
         <option name="colorMode">none</option>
         <option name="numberPrecision">0</option>
@@ -54,9 +52,7 @@
         </search>
         <option name="underLabel">alerts triggered</option>
         <option name="field">count</option>
-        <option name="linkFields">result, afterlabel</option>
-        <option name="linkSearch">| tstats count from datamodel=Carbon_Black.CB_Alerts by CB_Alerts.computer_name</option>
-        <option name="colorBy">value</option>
+ <option name="colorBy">value</option>
         <option name="colorMode">none</option>
         <option name="numberPrecision">0</option>
         <option name="showSparkline">1</option>
@@ -79,10 +75,7 @@
         </search>
         <option name="underLabel">banned hashes executed</option>
         <option name="field">count</option>
-        <option name="linkFields">result, afterlabel</option>
-        <option name="linkView">search</option>
-        <option name="linkSearch">| tstats count from datamodel=Carbon_Black.CB_Alerts where CB_Alerts.feed_name="cbbanning" by CB_Alerts.computer_name, CB_Alerts.process_name</option>
-        <option name="colorBy">value</option>
+ <option name="colorBy">value</option>
         <option name="colorMode">none</option>
         <option name="useColors">1</option>
         <option name="useThousandSeparators">1</option>
@@ -100,10 +93,7 @@
         </search>
         <option name="underLabel">master servers sending data</option>
         <option name="field">count</option>
-        <option name="linkFields">result, afterlabel</option>
-        <option name="linkView">search</option>
-        <option name="linkSearch">| tstats count from datamodel=Carbon_Black.CB_Alerts by CB_Alerts.cb_server</option>
-        <option name="colorBy">value</option>
+ <option name="colorBy">value</option>
         <option name="colorMode">none</option>
         <option name="useColors">1</option>
         <option name="useThousandSeparators">1</option>
